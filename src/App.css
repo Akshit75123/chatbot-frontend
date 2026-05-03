@@ -1,0 +1,120 @@
+:root {
+  --sidebar-bg: #202123;
+  --main-bg: #343541;
+  --text-light: #ececf1;
+  --border-color: #4d4d4f;
+}
+
+body, html, #root {
+  margin: 0;
+  height: 100%;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--main-bg);
+  color: var(--text-light);
+}
+
+.app-container {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-right: 1px solid var(--border-color);
+}
+
+.new-chat-btn {
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: white;
+  padding: 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  transition: background 0.2s;
+}
+
+.new-chat-btn:hover { background: #2b2c2f; }
+
+.conv-list { flex-grow: 1; overflow-y: auto; }
+
+.conv-item {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.conv-item.active { background: #3f4042; }
+.conv-item:hover { background: #2b2c2f; }
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Chat area specifics */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.messages-list {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.message-bubble {
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  gap: 15px;
+  line-height: 1.5;
+}
+
+.message-bubble.user { background: transparent; }
+.message-bubble.assistant { background: #444654; border-radius: 8px; }
+
+.input-area {
+  padding: 20px;
+  background: var(--main-bg);
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex-grow: 1;
+  background: #40414f;
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: white;
+  padding: 12px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
