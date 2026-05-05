@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import Chat from './Chat';
 import { chatApi } from './api';
 // import { MessageSquare, Plus, Database } from 'lucide-react';
-import { MessageSquare, Plus, Database, Trash2 } from 'lucide-react';
+import { MessageSquare, Plus, Database, Trash2, Menu, X } from 'lucide-react';
 import './App.css';
 
 function App() {
   const [conversations, setConversations] = useState([]);
   const [activeId, setActiveId] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Mobile sidebar state
+
+  // Close sidebar after selecting a chat on mobile
+  const handleSelectChat = (id) => {
+    setActiveId(id);
+    if (window.innerWidth <= 768) {
+      setIsSidebarOpen(false);
+    }
+  };
 
   const handleDelete = async (e, id) => {
   e.stopPropagation(); // Prevents the chat from being selected when deleting
@@ -54,37 +63,52 @@ function App() {
 
   return (
     <div className="app-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <button className="new-chat-btn" onClick={createNewChat}>
-          <Plus size={18} /> New Chat
+      {/* Mobile Header */}
+      <header className="mobile-header">
+        <button onClick={() => setIsSidebarOpen(true)}>
+          <Menu size={24} />
         </button>
+        <div className="mobile-title">{activeId ? "Chat" : "Spring AI"}</div>
+        <button onClick={createNewChat}>
+          <Plus size={24} />
+        </button>
+      </header>
+
+      {/* Sidebar with dynamic class */}
+      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+        <div className="sidebar-header">
+           <button className="new-chat-btn" onClick={createNewChat} style={{flex: 1}}>
+            <Plus size={18} /> New Chat
+          </button>
+          <button className="close-sidebar" onClick={() => setIsSidebarOpen(false)}>
+            <X size={24} />
+          </button>
+        </div>
+        
         <div className="conv-list">
-  {conversations.map(chat => (
-  <div 
-    key={chat.id} 
-    className={`conv-item ${activeId === chat.id ? 'active' : ''}`}
-    onClick={() => setActiveId(chat.id)}
-  >
-    <div className="conv-content">
-      <MessageSquare size={16} />
-      <span className="conv-topic">{chat.topic || "New Chat"}</span>
-    </div>
-    
-    <button 
-      className="delete-btn" 
-      onClick={(e) => handleDelete(e, chat.id)}
-      title="Delete Chat"
-    >
-      <Trash2 size={14} />
-    </button>
-  </div>
-))}
+          {conversations.map(chat => (
+            <div 
+              key={chat.id} 
+              className={`conv-item ${activeId === chat.id ? 'active' : ''}`}
+              onClick={() => handleSelectChat(chat.id)}
+            >
+              <div className="conv-content">
+                <MessageSquare size={16} />
+                <span className="conv-topic">{chat.topic || "New Chat"}</span>
+              </div>
+              <button className="delete-btn" onClick={(e) => handleDelete(e, chat.id)}>
+                <Trash2 size={14} />
+              </button>
+            </div>
+          ))}
 </div>
         <div className="sidebar-footer">
           <Database size={14} /> <span>Spring AI Backend</span>
         </div>
       </aside>
+
+      {/* Overlay for mobile to close sidebar when clicking outside */}
+      {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
 
       {/* Main Chat Area */}
       <main className="main-content">
