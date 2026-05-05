@@ -62,71 +62,75 @@ function App() {
 };
 
   return (
-    <div className="app-container">
-      {/* Mobile Header */}
-      <header className="mobile-header">
-        <button onClick={() => setIsSidebarOpen(true)}>
-          <Menu size={24} />
-        </button>
-        <div className="mobile-title">{activeId ? "Chat" : "Spring AI"}</div>
-        <button onClick={createNewChat}>
-          <Plus size={24} />
-        </button>
-      </header>
+  <div className="app-container">
+    {/* 1. Mobile Header: Always at the top */}
+    <header className="mobile-header">
+      <button onClick={() => setIsSidebarOpen(true)}>
+        <Menu size={24} />
+      </button>
+      <div className="mobile-title">
+        {activeId ? "Chat" : "Spring AI"}
+      </div>
+      <button onClick={createNewChat}>
+        <Plus size={24} />
+      </button>
+    </header>
 
-      {/* Sidebar with dynamic class */}
-      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <div className="sidebar-header">
-           <button className="new-chat-btn" onClick={createNewChat} style={{flex: 1}}>
-            <Plus size={18} /> New Chat
-          </button>
-          <button className="close-sidebar" onClick={() => setIsSidebarOpen(false)}>
-            <X size={24} />
-          </button>
-        </div>
-        
-        <div className="conv-list">
-          {conversations.map(chat => (
-            <div 
-              key={chat.id} 
-              className={`conv-item ${activeId === chat.id ? 'active' : ''}`}
-              onClick={() => handleSelectChat(chat.id)}
-            >
-              <div className="conv-content">
-                <MessageSquare size={16} />
-                <span className="conv-topic">{chat.topic || "New Chat"}</span>
-              </div>
-              <button className="delete-btn" onClick={(e) => handleDelete(e, chat.id)}>
-                <Trash2 size={14} />
-              </button>
+    {/* 2. Sidebar Drawer */}
+    <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+      <div className="sidebar-header">
+         <button className="new-chat-btn" onClick={createNewChat} style={{flex: 1}}>
+          <Plus size={18} /> New Chat
+        </button>
+        <button className="close-sidebar" onClick={() => setIsSidebarOpen(false)}>
+          <X size={24} />
+        </button>
+      </div>
+      
+      <div className="conv-list">
+        {conversations.map(chat => (
+          <div 
+            key={chat.id} 
+            className={`conv-item ${activeId === chat.id ? 'active' : ''}`}
+            onClick={() => handleSelectChat(chat.id)}
+          >
+            <div className="conv-content">
+              <MessageSquare size={16} />
+              <span className="conv-topic">{chat.topic || "New Chat"}</span>
             </div>
-          ))}
-</div>
-        <div className="sidebar-footer">
-          <Database size={14} /> <span>Spring AI Backend</span>
-        </div>
-      </aside>
-
-      {/* Overlay for mobile to close sidebar when clicking outside */}
-      {isSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>}
-
-      {/* Main Chat Area */}
-      <main className="main-content">
-        {activeId ? (
-    <Chat 
-      conversationId={activeId} 
-      onMessageSent={refreshList} // Pass the refresh function here
-    />
-        ) : (
-          <div className="empty-state">
-            <h2>Welcome to Spring Chat</h2>
-            <p>Select a conversation or start a new one to begin.</p>
-            <button onClick={createNewChat}>Start Chat</button>
+            <button className="delete-btn" onClick={(e) => handleDelete(e, chat.id)}>
+              <Trash2 size={14} />
+            </button>
           </div>
-        )}
-      </main>
-    </div>
-  );
+        ))}
+      </div>
+      <div className="sidebar-footer">
+        <Database size={14} /> <span>Powered by Spring AI</span>
+      </div>
+    </aside>
+
+    {/* 3. Mobile Overlay */}
+    {isSidebarOpen && (
+      <div className="sidebar-overlay" onClick={() => setIsSidebarOpen(false)}></div>
+    )}
+
+    {/* 4. Main Viewport */}
+    <main className="main-content">
+      {activeId ? (
+        <Chat 
+          conversationId={activeId} 
+          onMessageSent={refreshList} 
+        />
+      ) : (
+        <div className="empty-state">
+          <h2>Welcome to AI Chatbot</h2>
+          <p>Select a conversation or start a new one to begin.</p>
+          <button onClick={createNewChat}>Start Chat</button>
+        </div>
+      )}
+    </main>
+  </div>
+);
 }
 
 export default App;

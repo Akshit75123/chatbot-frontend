@@ -239,12 +239,28 @@ body, html, #root {
   .app-container {
     flex-direction: column; /* Stack header and chat vertically */
     height: 100vh;
+    overflow:  hidden;
   }
 
   .mobile-header {
-    display: flex; /* Show the header */
-    flex-shrink: 0; /* Prevent header from squishing */
-    z-index: 10;
+    display: flex;
+    height: 60px;
+    background: var(--sidebar-bg);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0; /* Important: prevents header from collapsing */
+    z-index: 100;
+  }
+
+  .chat-container {
+    height: 100%;
+    max-width: 100%;
+  }
+
+  .messages-list {
+    padding-bottom: 80px; /* Space for the input area */
   }
 
   .sidebar {
@@ -252,8 +268,11 @@ body, html, #root {
     top: 0;
     left: 0;
     bottom: 0;
+    width: 280px;
     transform: translateX(-100%);
-    z-index: 1001; /* Higher than header */
+    transition: transform 0.3s ease-in-out;
+    z-index: 1001; /* Must be higher than header */
+    box-shadow: 10px 0 20px rgba(0,0,0,0.4);
   }
 
   .sidebar.open {
@@ -262,17 +281,17 @@ body, html, #root {
 
   .close-sidebar {
     display: block;
+    margin-left: auto;
   }
 
   .main-content {
     flex-grow: 1;
-    overflow: hidden;
-    height: calc(100vh - 50px); /* Subtract header height */
+    height: calc(100vh - 60px); 
+    overflow-y: auto;
+    position: relative;
+    z-index: 1;
   }
 
-  .messages-list {
-    padding: 15px 5px;
-  }
 
   .message-bubble {
     gap: 10px;
@@ -285,6 +304,13 @@ body, html, #root {
 
   .delete-btn {
     opacity: 1; /* Always visible for touch */
+  }
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
   }
 }
 
