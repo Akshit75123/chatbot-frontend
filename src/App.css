@@ -46,14 +46,45 @@ body, html, #root {
 .conv-list { flex-grow: 1; overflow-y: auto; }
 
 .conv-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px;
-  margin: 5px 0;
-  border-radius: 5px;
   cursor: pointer;
+  transition: background 0.2s;
+}
+
+.conv-content {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.9rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.delete-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 4px;
+  border-radius: 4px;
+  opacity: 0; /* Hidden by default */
+  transition: all 0.2s;
+}
+
+.conv-item:hover .delete-btn {
+  opacity: 1; /* Show on hover */
+}
+
+.delete-btn:hover {
+  color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.1);
+}
+
+.conv-item.active .delete-btn {
+  opacity: 1;
+  color: #fff; /* Adjust based on your active item color */
 }
 
 .conv-item.active { background: #3f4042; }
