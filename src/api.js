@@ -6,7 +6,7 @@ export const chatApi = {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'text/plain', // Your controller takes @RequestBody String
+        'Content-Type': 'text/plain',
         'AI-Provider': provider,
         'AI-Model': model
       },
