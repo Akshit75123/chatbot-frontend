@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8081/api/conversation";
+const API_BASE = "https://springai-chatbot-backend.onrender.com/api/conversation";
 
 export const chatApi = {
   // POST /{conversationId}
