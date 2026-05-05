@@ -2,7 +2,7 @@ const API_BASE = "https://springai-chatbot-backend.onrender.com/api/conversation
 
 export const chatApi = {
   // POST /{conversationId}
-  sendMessage: async (id, text, provider = 'gemini', model = 'gemini-2.5-flash') => {
+  sendMessage: async (id, text, provider = 'openai', model = 'gpt-5.4-mini') => {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'POST',
       headers: {
