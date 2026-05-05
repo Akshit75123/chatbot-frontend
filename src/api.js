@@ -2,7 +2,7 @@ const API_BASE = "http://localhost:8081/api/conversation";
 
 export const chatApi = {
   // POST /{conversationId}
-  sendMessage: async (id, text, provider = 'openai', model = 'gpt-5.4-mini') => {
+  sendMessage: async (id, text, provider = 'gemini', model = 'gemini-2.5-flash') => {
     const response = await fetch(`${API_BASE}/${id}`, {
       method: 'POST',
       headers: {
